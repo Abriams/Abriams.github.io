@@ -1,0 +1,367 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Abriams blog"><meta name="keywords" content="前端， 移动互联网, vue"><title>认识es6 | 淡笑忘、祈一世凡恋</title><link rel="stylesheet" type="text/css" href="/css/donate.css"><link rel="stylesheet" type="text/css" href="//fonts.neworld.org/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.1"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.1"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">认识es6</h1><a id="logo" href="/.">淡笑忘、祈一世凡恋</a><p class="description">进步的源泉来源于坚持不懈</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="Arama"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">认识es6</h1><div class="post-meta"><a href="/2018/08/05/cjsu6q1i4000qhgvbp5kq24ea/#comments" class="comment-count"></a><p><span class="date">Aug 05, 2018</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h3 id="es6常用api介绍"><a href="#es6常用api介绍" class="headerlink" title="es6常用api介绍"></a>es6常用api介绍</h3><h4 id="一、let和const命令介绍及区别"><a href="#一、let和const命令介绍及区别" class="headerlink" title="一、let和const命令介绍及区别"></a>一、let和const命令介绍及区别</h4><h5 id="1-let命令："><a href="#1-let命令：" class="headerlink" title="1. let命令："></a>1. let命令：</h5><p>1）、基本用法：<br>    es5只有两种方式声明变量var以及function，es6新增了四种let、const、import、class；<br>    let声明的变量的方式与var相似，但是声明的变量，只在let命令所在的代码块中生效;</p>
+<pre><code>{
+    let a = 1;
+    var b = 2;
+}
+console.log(a);//Error in created hook: &quot;ReferenceError: a is not defined&quot;
+console.log(b);//2
+上面在代码块中使用let，var分别声明了连个变量，然后再代码块外面调用，let声明的变量会报错，var声明的
+返回值正常，表明let只在它所在的代码块中生效；
+</code></pre><p>2）、let不存在变量提升问题<br>    我们知道使用var声明的变量会存在变量提升问题，但是在let中不存在这种现象</p>
+<pre><code>console.log(a);//undefined
+var a = 1;
+console.log(b);//报错
+let b = 2;
+上述代码中，使用let声明了变量b，在声明之前使用会报错，而使用var声明的变量，在使用前值是undefined；
+</code></pre><p>3）、暂时性死区<br>在es6中规定，如果区块中存在let和const命令，这个区块对这些命令声明的变量，从一开始就形成了封闭作用域，在声明前使用这些变量就会报错；</p>
+<pre><code>var a = 1;
+{
+    a = 3;
+    console.log(a);//报错
+    let a;
+}
+</code></pre><p>4）、不允许重复声明<br>let不允许在相同作用域内重复声明同一个变量</p>
+<pre><code>// 报错
+function fn1() {
+    let a = 1;
+    var a = 2;
+}
+// 报错
+function fn2() {
+    let a = 1;
+    let a = 2;
+}
+function fn3(argements) {
+    let argements; // 也会报错
+}
+</code></pre><p>es6规定暂时性死区，以及let，const语句不提升变量，主要是为了减少运行时错误，防止在变量声明前就是用这个变量。从而导致意料之外的行为；</p>
+<h5 id="1-const命令："><a href="#1-const命令：" class="headerlink" title="1. const命令："></a>1. const命令：</h5><p>const声明一个常量，一旦声明，常量的值就不能改变了，所以const在声明是必须立即初始化，不能留到以后赋值，如果修改它的值会报错</p>
+<pre><code>const index = 1;
+console.log(index)//1
+index = 3;// 报错
+
+const num;报错
+const声明的常量也不存在变量提升，同样的也是有暂时性死区，也不能重复声明变量
+</code></pre><h4 id="二、块级作用域"><a href="#二、块级作用域" class="headerlink" title="二、块级作用域"></a>二、块级作用域</h4><h5 id="1、块级作用域的用处"><a href="#1、块级作用域的用处" class="headerlink" title="1、块级作用域的用处"></a>1、块级作用域的用处</h5><p>在es5中只有全局作用域以及函数作用域，在许多情况下使用很不方便</p>
+<pre><code>var num = 1;
+function f() {
+    console.log(num);
+    if (false) {
+        var num = 2;
+    }
+}
+f(); // undefined
+//在上述代码中在函数内部声明的变量覆盖了外层声明的变量；
+
+var index = &apos;hello&apos;;
+for (var i = 0; i &lt; s.length; i++) {
+    console.log(s[i]);
+}
+console.log(i); // 5
+//在for循环中的计数变量会泄露到全局
+</code></pre><h5 id="2、es6中的块级作用域"><a href="#2、es6中的块级作用域" class="headerlink" title="2、es6中的块级作用域"></a>2、es6中的块级作用域</h5><pre><code>function fn1() {
+    let i = 5;
+    if (true) {
+        let i = 10;
+    }
+    console.log(n); // 5
+}
+//上述代码中存在两个代码块，都声明了变量i，在运行后输出5，说明function声明的代码块不受if(){}代码块的影响
+
+{
+    {
+        {let i = 5}；
+        console.log(i)//报错
+    }
+}
+//let只在当前代码块中生效,其他代码块中是无法使用的，在es6中允许使用作用域的任意嵌套
+
+{{{
+        let i = 1;
+        {let i = 2};//不报错，不同的作用域中可以声明同一个变量
+}}}
+</code></pre><h5 id="3、块级作用域域函数作用域"><a href="#3、块级作用域域函数作用域" class="headerlink" title="3、块级作用域域函数作用域"></a>3、块级作用域域函数作用域</h5><p>在es5中函数只能在顶层作用域中以及函数作用域中声明，不能再块级作用域中声明，而es6中则可以在块级作用域中声明函数，在块级作用域中声明的函数只在当前作用域中生效，对其他作用域不会造成影响；另外，es6的块级作用域内声明函数必须使用大括号，如果没有会报错</p>
+<pre><code>// 不报错
+if (true) {
+    function f() {}
+}
+// 报错
+if (true)
+function f() {}
+</code></pre><h4 id="三、变量的解构赋值"><a href="#三、变量的解构赋值" class="headerlink" title="三、变量的解构赋值"></a>三、变量的解构赋值</h4><h5 id="1、数组的解构赋值"><a href="#1、数组的解构赋值" class="headerlink" title="1、数组的解构赋值"></a>1、数组的解构赋值</h5><p>在es6以前为变量赋值只能指定值</p>
+<pre><code>let a = 1;
+let b = 2;
+let c = 3;
+</code></pre><p>上述代码在es6中可以住这样写</p>
+<pre><code>let [a, b, c] = [1, 2, 3];//a=1,b=2,c=3
+
+//只要等号两边的模式相同，左边的变量就会被赋值对应的值
+{
+    let [x, y] = [1, 2, 3] //x=1,y=2
+};
+{
+    let [x, ,y] = [1, 2, 3] //x=1,y=3
+};
+{
+    let [x, [y], [z]] = [1, [2], [3]] //x=1,y=2,z=3
+};
+{
+    let [x, ...y] = [1, 2, 3, 4] //x=1,y=[2,3,4]
+};
+{
+    let [x, y, ...z] = [1] //x=1,y=undefined,z=[]
+};
+</code></pre><p>如果结构不成功就会返回undefined</p>
+<pre><code>{
+    let x = []; //x = undefined;
+}
+{
+    let [x, y] = [1] //y =undefined;
+}    
+</code></pre><p>如果等号左边的变量只能匹配等号右边变量的一部分值，这种情况就是不完全解构，但是解构依然会成功；</p>
+<pre><code>{
+    let [x, y] = [1, 2, 3] //x=1,y=2;
+}
+{
+    let [x, [y], z] = [1, [2, 4], 3] //x=1,y=2,z=3;
+}
+</code></pre><p>如果等号右边不是数组（不可遍历的结构）就会报错</p>
+<pre><code>{
+    let [x] = 1;
+    let [y] = false;
+    let [z] = NaN;
+    let [a] = undefined;
+    let [b] = null;
+    let [c] = {};
+}
+</code></pre><p>结构赋值允许指定默认值</p>
+<pre><code>{
+    let [x = 1] = [];//x = 1
+    let [i, n = 2] = [1];//i=1,n=2
+    let [a = 1, b = 2] = [3]//a=3,b=2
+}
+</code></pre><p>在es6内部使用严格相等运算符（===），来判断一个位置是否有值，所以只有一个数组成员严格等于undefined默认值才会生效</p>
+<pre><code>{
+    let [x = 1] = [undefined] //x=1 
+    let [y = 2] = [null] //y=null,以为null===undefined不成立；   
+}
+</code></pre><p>如果默认是一个表达式，那么这个表达式只有在用到的时候才会求值</p>
+<pre><code>{
+    function fn() {
+        console.log(111);
+    }
+    let [x = f()] = [1];//fn不会执行,因为x能取到值1
+}
+</code></pre><p>默认值也可以使用解构赋值的其他变量，但是该变量必须先声明</p>
+<pre><code>{
+    let [x = 1, y = x] = [] //x= 1;y =2  
+}
+{
+    let [x = 1, y = x] = [2] //x=2,y=2
+}
+{
+    let [x = y, y = 1] = [] //报错 y is not defined，因为y还没有声明
+}
+</code></pre><h5 id="2、对象的解构赋值"><a href="#2、对象的解构赋值" class="headerlink" title="2、对象的解构赋值"></a>2、对象的解构赋值</h5><p>对象的结构和数组类似，但是数组的解构按数组的顺序一次取值，而对象是没有顺序的，变量名必须与属性名一直才能取到正确的值；</p>
+<pre><code>{
+    let {bar, foo} = {foo: 1, bar: 2} //foo:1,bar:2;
+    let {bar1} = {foo1: 1, bar2: 2} //bar1的值为undefined；
+}
+</code></pre><p>如果变量名与属性名不一致，必须要写成如下形式</p>
+<pre><code>{
+    let {foo: foo1} = {foo: 1} //foo1:1
+    let foo2 = {num1: 10, num2: 20  };
+    let {num1: f1, num2: f2} = foo2; //f1:10, f2:20;
+}
+</code></pre><p>变量结构的机制是先找到同名的属性，然后在赋值给对应的变量，如下：</p>
+<pre><code>{
+    let {bar: foo1} = {bar: 10, bar1: 20} //foo1:10; bar: error: bar is not defined
+    //bar 只是匹配的模式，foo1才是变量，真正被赋值的是变量foo1而不是模式bar
+}
+</code></pre><p>与数组解构一样对象的解构也可以嵌套  </p>
+<pre><code>{
+    let foo = {
+        index: [
+            10,
+            {
+                y: 20
+            }
+        ]
+    }
+    let {index:[x, {y}]} = foo;//x:10,y:20
+}
+</code></pre><p>对象结构中要注意赋值的是变量，而不是模式，模式只是用来匹配变量的</p>
+<pre><code>{
+    let obj = {
+        foo: {
+            index: {
+                num: 1,
+                col: 2
+            }
+        }
+    } 
+
+    let {foo:{index: {num,col}}} = obj; //num:1, col:2
+}
+</code></pre><p>对象的解构也可以指定默认值</p>
+<pre><code>{
+    let {x=1} = {} //x=3
+}
+{
+    let {x: y= 1} = {} // y = 3;
+}
+{
+    let {x: y= 1} = {null} // y:null;
+}
+//和数组一样默认值生效的条件也是严格等于undefined
+</code></pre><p>如果解构失败，变量的值是undefined</p>
+<pre><code>{
+    let {foo} = {bar: 1} //foo:undefined
+}
+</code></pre><p>如果解构模式是嵌套的对象，如果子对象所在的父对象不存在，则会报错</p>
+<pre><code>{
+    let {foo: {bar}} = {x: 1} //报错
+}
+</code></pre><p>解构赋值允许等号左边的模式中，不放置任何变量名，因此如下写法是可以执行的</p>
+<pre><code>{
+    ({} = [1, 2])
+    ({} = &apos;abc)
+    ({} = [])
+}
+</code></pre><p>也可以对数组进行对象属性的解构</p>
+<pre><code>{
+    let arr = [1, 2, 3];
+    let {0: f1, [arr.length-1]: f2} = arr //f1:1, f2:3
+}
+</code></pre><h5 id="2、字符串的解构赋值"><a href="#2、字符串的解构赋值" class="headerlink" title="2、字符串的解构赋值"></a>2、字符串的解构赋值</h5><pre><code>字符串在解构的时候会被转换成一个类似数组的对象
+
+{
+    let [A, B, C, D] = &apos;abcd&apos;;
+    //A:a,B:b,C:c,D:d;
+} 
+</code></pre><h5 id="3、数值和布尔值的解构赋值"><a href="#3、数值和布尔值的解构赋值" class="headerlink" title="3、数值和布尔值的解构赋值"></a>3、数值和布尔值的解构赋值</h5><p>数值和布尔值的解构赋值会先转成对象（隐式调用toString方法）</p>
+<pre><code>{
+    let {toString: s} = 123;//true    s === Number.prototype.toString(隐式调用)
+}
+
+{
+    let {toString: s} = true;//true    s === Boolean.prototype.toString 
+}
+
+{
+    let { prop: x } = undefined; // TypeError
+    let { prop: y } = null; // TypeError
+    //undefined,null无法转成对象
+}
+</code></pre><h5 id="4、函数参数的解构赋值"><a href="#4、函数参数的解构赋值" class="headerlink" title="4、函数参数的解构赋值"></a>4、函数参数的解构赋值</h5><pre><code>{
+    function fn([x, y]) {
+        return x + y;
+    }
+    fn([1, 2]);//3
+}
+</code></pre><p>函数参数的结解构也可以指定默认值</p>
+<pre><code>{
+    function fn({x=3, y=4} = {}) {
+        return [x, y]
+    }
+    fn({x:10, y:20});// [10, 20]
+    fn(); // [3, 4]
+}
+</code></pre><h4 id="四、圆括号的使用"><a href="#四、圆括号的使用" class="headerlink" title="四、圆括号的使用"></a>四、圆括号的使用</h4><p>es6对于圆括号的规则是可能导致解构发生歧义，就不能使用圆括号</p>
+<h5 id="1、不能使用圆括号的场景"><a href="#1、不能使用圆括号的场景" class="headerlink" title="1、不能使用圆括号的场景"></a>1、不能使用圆括号的场景</h5><p>(1). 变量的声明赋值 </p>
+<pre><code>{
+    let [(a)] = [1];
+    let {x: (c)} = {};
+    let ({x: c}) = {};
+    let {(x: c)} = {};
+    let {(x): c} = {};
+    let { o: ({ p: p }) } = { o: { p: 2 } };
+    //上面6个语句都会报错，因为它们都是变量声明语句，模式中不能使用圆括号
+}
+</code></pre><p>(2). 函数参数</p>
+<pre><code>{
+    function f([(z)]) { return z; } // 报错
+    function f([z,(x)]) { return x; } // 报错
+    //函数参数也属于变量声明，因此不能带有圆括号。
+}
+</code></pre><p>(3). 赋值语句的模式</p>
+<pre><code>{
+    ({ p: a }) = { p: 42 }; //报错
+    ([a]) = [5];//报错
+}
+</code></pre><h5 id="1、能使用圆括号的场景"><a href="#1、能使用圆括号的场景" class="headerlink" title="1、能使用圆括号的场景"></a>1、能使用圆括号的场景</h5><p>(1). 赋值语句的非模式部分，可以使用圆括号。</p>
+<pre><code>{
+    [(b)] = [3]; // 正确
+    ({ p: (d) } = {}); // 正确
+    [(parseInt.prop)] = [3]; // 正确
+}
+</code></pre><h4 id="五、函数"><a href="#五、函数" class="headerlink" title="五、函数"></a>五、函数</h4><h5 id="1、箭头函数的使用"><a href="#1、箭头函数的使用" class="headerlink" title="1、箭头函数的使用"></a>1、箭头函数的使用</h5><p>在es6中允许使用“箭头”（=&gt;）定义函数</p>
+<pre><code>{
+    var f = fn =&gt; v
+    //以上代码等同于
+    var f = function fn(v) {
+        return v
+    }
+}
+</code></pre><p>基本语法</p>
+<pre><code>{
+    用法一：参数1（单一参数） =&gt; {函数声明} //一个参数，多个执行语句
+    用法二：（参数1）（单一参数） =&gt; 表达式（只有一条语句）//单个参数一条执行语句
+    用法三：(参数1，参数2，... , 参数n) =&gt; {函数声明} //多个参数，多个执行语句
+    用法四：(参数1，参数2，... , 参数n) =&gt; 表达式（只有一条语句）//相当于(参数1, 参数2, …, 参数N) =&gt;{ return 表达式; }//多个参数，一条语句
+    用法五： () =&gt; {函数声明} //没有参数时使用()代替
+}
+</code></pre><p>其他使用</p>
+<pre><code>{
+    var f = bar =&gt; ({foo: bar})
+    console.log(f(1)); //{foo: 1}
+    //箭头函数如果想直接返回一个对象必须在对象外面加()，不然会报错
+}
+
+{
+    (参数1, 参数2, ...rest) =&gt; {函数声明}
+    (参数1 = 默认值1,参数2, …, 参数N = 默认值N) =&gt; {函数声明}
+    //可以使用默认参数以及剩余参数
+}
+
+{
+    let f = ([a, b] = [1, 2], {x: c} = {x: a + b}) =&gt; a + b + c;
+    f();  // 6
+    //也可以使用解构
+}
+</code></pre><p>如果箭头函数不需要参数或者需要多个参数，则使用一个()代表参数部分</p>
+<pre><code>{
+    var f1 = () =&gt; x //等同于 var f1 = function() {return x}
+}
+
+{
+    var f1 = (index1, index2) =&gt; index1 + index2;
+    //等同于var f1 = function(index1, index2) {return index1+index2}
+}
+</code></pre><p>如果箭头函数的代码块部分多于一条语句，就要使用大括号将它们括起来，并且使用return语句返回。</p>
+<pre><code>{
+    var f1 = (index1, index2) =&gt; {
+        return index1 + index2;
+    }
+}
+</code></pre><h5 id="2、箭头函数注意点"><a href="#2、箭头函数注意点" class="headerlink" title="2、箭头函数注意点"></a>2、箭头函数注意点</h5><p>（1）、箭头函数内部的this是固定的，就是定义时所在的对象，而不是使用时调用的对象；<br>（2）、不能当做构造函数使用，如果和new一起使用会抛出错误；<br>（3）、箭头函数内部不存在arguments对象，但是可以用rest参数代替arguments对象；<br>（4）、call 或 apply 调用在箭头函数中不能修改this指针，他们的第一个参数会被忽略<br>（5）、箭头函数没有prototype属性。<br>（6）、箭头函数在参数和箭头之间不能换行。</p>
+<script type="text/javascript" src="/js/jquery.js?v=2.0.1" async></script><div class="post-donate"><div id="donate_board" class="donate_bar center"><a id="btn_donate" href="javascript:;" title="打赏" class="btn_donate"></a><div class="donate_txt"> &uarr;<br>坚持原创技术分享，您的支持将鼓励我继续创作！<br></div></div><div id="donate_guide" class="donate_bar center hidden pay"><img src="/images/weChatMoney.png" title="微信打赏" alt="微信打赏"><img src="/images/alipayMoney.png" title="支付宝打赏" alt="支付宝打赏"></div><script type="text/javascript">document.getElementById('btn_donate').onclick = function(){
+    $('#donate_board').addClass('hidden');
+    $('#donate_guide').removeClass('hidden');
+}</script></div></div><div class="tags"><a href="/tags/es6/">es6</a></div><div class="post-share"><div class="bdsharebuttonbox"><span style="float:left;line-height: 28px;height: 28px;font-size:16px;font-weight:blod">分享到：</span><a href="#" data-cmd="more" class="bds_more"></a><a href="#" data-cmd="mshare" title="分享到一键分享" class="bds_mshare"></a><a href="#" data-cmd="fbook" title="分享到Facebook" class="bds_fbook"></a><a href="#" data-cmd="twi" title="分享到Twitter" class="bds_twi"></a><a href="#" data-cmd="linkedin" title="分享到linkedin" class="bds_linkedin"></a><a href="#" data-cmd="youdao" title="分享到有道云笔记" class="bds_youdao"></a><a href="#" data-cmd="evernotecn" title="分享到印象笔记" class="bds_evernotecn"></a><a href="#" data-cmd="weixin" title="分享到微信" class="bds_weixin"></a><a href="#" data-cmd="qzone" title="分享到QQ空间" class="bds_qzone"></a><a href="#" data-cmd="tsina" title="分享到新浪微博" class="bds_tsina"></a></div></div><div class="post-nav"><a href="/2018/08/16/cjsu6q1gx0005hgvb58nr3xw5/" class="pre">javascript数据结构与算法一（javascript基础）</a><a href="/2018/07/21/cjsu6q1gk0000hgvb4f9r5m25/" class="next">drafting</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zODk0OS8xNTQ3Nw=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#es6常用api介绍"><span class="toc-text">es6常用api介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#一、let和const命令介绍及区别"><span class="toc-text">一、let和const命令介绍及区别</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-let命令："><span class="toc-text">1. let命令：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-const命令："><span class="toc-text">1. const命令：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#二、块级作用域"><span class="toc-text">二、块级作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1、块级作用域的用处"><span class="toc-text">1、块级作用域的用处</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2、es6中的块级作用域"><span class="toc-text">2、es6中的块级作用域</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3、块级作用域域函数作用域"><span class="toc-text">3、块级作用域域函数作用域</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、变量的解构赋值"><span class="toc-text">三、变量的解构赋值</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1、数组的解构赋值"><span class="toc-text">1、数组的解构赋值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2、对象的解构赋值"><span class="toc-text">2、对象的解构赋值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2、字符串的解构赋值"><span class="toc-text">2、字符串的解构赋值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3、数值和布尔值的解构赋值"><span class="toc-text">3、数值和布尔值的解构赋值</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4、函数参数的解构赋值"><span class="toc-text">4、函数参数的解构赋值</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#四、圆括号的使用"><span class="toc-text">四、圆括号的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1、不能使用圆括号的场景"><span class="toc-text">1、不能使用圆括号的场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1、能使用圆括号的场景"><span class="toc-text">1、能使用圆括号的场景</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#五、函数"><span class="toc-text">五、函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1、箭头函数的使用"><span class="toc-text">1、箭头函数的使用</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2、箭头函数注意点"><span class="toc-text">2、箭头函数注意点</span></a></li></ol></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/02/28/cjsu6q1i1000nhgvb2tporm16/">javascript数据结构与算法八（树）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/cjsu6q1mu0015hgvb6brc4ibp/">javascript数据结构与算法七（字典和散列表）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/28/cjsu6q1lo0012hgvbcle3lnuv/">javascript数据结构与算法六（集合）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/18/cjsu6q1mv0016hgvbdsnf3k88/">javascript数据结构与算法五（链表）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/cjsu6q1i6000uhgvbg8xw34xz/">javascript数据结构与算法四（队列）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/28/cjsu6q1i2000ohgvbcscurwsh/">javascript数据结构与算法三（栈）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/10/cjsu6q1ln0011hgvbauo2sgu7/">javascript数据结构与算法二（数组的使用）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/16/cjsu6q1gx0005hgvb58nr3xw5/">javascript数据结构与算法一（javascript基础）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/05/cjsu6q1i4000qhgvbp5kq24ea/">认识es6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/21/cjsu6q1gk0000hgvb4f9r5m25/">drafting</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/js实现拖拽/" style="font-size: 15px;">js实现拖拽</a> <a href="/tags/前端历史/" style="font-size: 15px;">前端历史</a> <a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/slot/" style="font-size: 15px;">slot</a> <a href="/tags/vue/" style="font-size: 15px;">vue</a> <a href="/tags/vuex/" style="font-size: 15px;">vuex</a> <a href="/tags/es6/" style="font-size: 15px;">es6</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/github-pages/" style="font-size: 15px;">github pages</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-weibo"> 新浪微博</i></div><iframe width="100%" height="400" frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&amp;width=0&amp;height=550&amp;fansRow=2&amp;ptype=1&amp;speed=0&amp;skin=1&amp;isTitle=1&amp;noborder=1&amp;isWeibo=1&amp;isFans=1&amp;uid=6110018783&amp;verifier=e6a8e226&amp;dpc=1" class="share_self"></iframe></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://github.com/Abriams/Abriams.github.io" title="github地址" target="_blank">github地址</a><ul></ul><a href="https://weibo.com/u/6110018783/home?wvr=5" title="微博" target="_blank">微博</a><ul></ul><a href="https://juejin.im/timeline" title="掘金" target="_blank">掘金</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">Baidu Site Haritası</a> |  <a href="/atom.xml">订阅</a> |  <a href="/about/">关于</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次</p><p><span> Copyright &copy;<a href="/." rel="nofollow">Abriams.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?b1cc44eb56a7dbf6192c0702e5b38b08";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.1"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.1" async></script><script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","weixin","tsina","qzone","linkedin","fbook","twi","print","renren","sqq","evernotecn","bdysc","tqq","tqf","bdxc","kaixin001","tieba","douban","bdhome","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","h163","copy"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"]}};with(document)0[(getElementsByTagName('head')[0]||head).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script><script>(function(d, s) {
+  var j, e = d.getElementsByTagName('body')[0];
+  if (typeof LivereTower === 'function') { return; }
+  j = d.createElement(s);
+  j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  j.async = true;
+  e.appendChild(j);
+})(document, 'script');
+</script></body></html>
