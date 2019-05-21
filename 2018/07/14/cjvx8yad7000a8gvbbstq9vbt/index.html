@@ -1,0 +1,183 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Abriams blog"><meta name="keywords" content="前端， 移动互联网, vue"><title>vue slot使用小结 | 淡笑忘、祈一世凡恋</title><link rel="stylesheet" type="text/css" href="/css/donate.css"><link rel="stylesheet" type="text/css" href="//fonts.neworld.org/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.1"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.1"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">vue slot使用小结</h1><a id="logo" href="/.">淡笑忘、祈一世凡恋</a><p class="description">进步的源泉来源于坚持不懈</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="Arama"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">vue slot使用小结</h1><div class="post-meta"><a href="/2018/07/14/cjvx8yad7000a8gvbbstq9vbt/#comments" class="comment-count"></a><p><span class="date">Jul 14, 2018</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h3 id="一、slot简介"><a href="#一、slot简介" class="headerlink" title="一、slot简介"></a>一、slot简介</h3><p>在vue实际项目开发当中，我们经常会把父组件的内容与子组件自己的模板混合起来使用。而这样的一个过程在Vue中被称为内容分发。<br>在Vue中，slot也分多种，从Vue的官网中可以获知，其主要分为：单个插槽、具名插槽和作用域插槽三种。<br>下面就逐一介绍这三种插槽的用法：</p>
+<h3 id="二、slot插槽具体用法"><a href="#二、slot插槽具体用法" class="headerlink" title="二、slot插槽具体用法"></a>二、slot插槽具体用法</h3><h4 id="2-1单个插槽的使用"><a href="#2-1单个插槽的使用" class="headerlink" title="2.1单个插槽的使用"></a>2.1单个插槽的使用</h4><p>从官网中（<a href="https://cn.vuejs.org/）我们知道，如果子组件template中没有包含任何一个" target="_blank" rel="noopener">https://cn.vuejs.org/）我们知道，如果子组件template中没有包含任何一个</a><slot>时，就算父组件分发再多的内容也将会被丢弃。如下案例：</slot></p>
+<pre><code>子组件slotChildren组件，
+&lt;template&gt;
+    &lt;div&gt;
+        &lt;header&gt;slotchildrenheader&lt;/header&gt;
+        &lt;main&gt;这是子组件的内容&lt;/main&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;    
+&lt;/script&gt;
+
+父组件slotdemo组件
+&lt;template&gt;
+    &lt;div class=&quot;Slotdemo&quot;&gt;
+        &lt;slotChildren&gt;
+            &lt;div&gt;为子组件添加新内容&lt;/div&gt;
+        &lt;/slotChildren&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    import slotChildren from &apos;./slotChildren.vue&apos;
+    export default {
+        name: &quot;Slotdemo&quot;,
+        components: {
+            slotChildren
+        }
+    } 
+&lt;/script&gt;
+</code></pre><p>页面渲染结果如下图：<br>上图所示在<slotchildren></slotchildren>中添加内容并不会显示<br><img src="/2018/07/14/cjvx8yad7000a8gvbbstq9vbt/slot-01.png" alt="slot演示"></p>
+<p>只有子组件模板只中拥有一个没有属性的slot（可以有多个带属性的slot，后面的内容会介绍），父组件传入的整个内容片段才会被插入到slot所在的位置，并将替换掉slot本身，如果传入的内容为空则会显示slot的默认内容。如下案例：</p>
+<pre><code>父组件slotdemo
+&lt;template&gt;
+    &lt;div class=&quot;Slotdemo&quot;&gt;
+        &lt;slotChildren&gt;
+            &lt;div&gt;为子组件添加新内容&lt;/div&gt;
+        &lt;/slotChildren&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    import slotChildren from &apos;./slotChildren.vue&apos;
+    export default {
+        name: &quot;Slotdemo&quot;,
+        components: {
+            slotChildren
+        }
+    }
+
+&lt;/script&gt;
+
+子组件slotChildren组件，
+&lt;template&gt;
+&lt;div&gt;
+    &lt;header&gt;slotchildrenheader&lt;/header&gt;
+    &lt;main&gt;这是子组件的内容&lt;/main&gt;
+    &lt;slot&gt;新添加内容显示在此显示&lt;/slot&gt;//派发的内容显示在这里
+&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;&lt;/script&gt;
+</code></pre><p>页面渲染结果如下图：<br><img src="/2018/07/14/cjvx8yad7000a8gvbbstq9vbt/slot-02.png" alt="slot演示"></p>
+<p>当派发的内容为空时，会默认显示slot的内容</p>
+<pre><code>父组件slotdemo
+&lt;template&gt;
+    &lt;div class=&quot;Slotdemo&quot;&gt;
+        &lt;slotChildren&gt;
+        &lt;/slotChildren&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    import slotChildren from &apos;./slotChildren.vue&apos;
+    export default {
+        name: &quot;Slotdemo&quot;,
+        components: {
+            slotChildren
+        }
+    }
+
+&lt;/script&gt;
+
+子组件slotChildren组件，
+&lt;template&gt;
+&lt;div&gt;
+    &lt;header&gt;slotchildrenheader&lt;/header&gt;
+    &lt;main&gt;这是子组件的内容&lt;/main&gt;
+    &lt;slot&gt;新添加内容显示在此显示&lt;/slot&gt;//派发的内容显示在这里
+&lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;&lt;/script&gt;
+</code></pre><p>页面渲染结果如下图：<br><img src="/2018/07/14/cjvx8yad7000a8gvbbstq9vbt/slot-03.png" alt="slot演示">  </p>
+<h4 id="2-2具名插槽的使用"><a href="#2-2具名插槽的使用" class="headerlink" title="2.2具名插槽的使用"></a>2.2具名插槽的使用</h4><p><slot>可以用一个特殊的属性name来配置父组件如何分发内容。多个插槽可以有不同的名字。具名插槽将根据name属性匹配内容片段中有对应slot属性的元素。</slot></p>
+<pre><code>父组件slotdemo
+&lt;template&gt;
+    &lt;div class=&quot;Slotdemo&quot;&gt;
+        &lt;slotChildren&gt;
+            &lt;div slot=&quot;header&quot;&gt;新的slotchildrenheader&lt;/div&gt;
+            &lt;div slot=&quot;main&quot;&gt;新的内容&lt;/div&gt;
+            &lt;div&gt;没有name&lt;/div&gt;
+        &lt;/slotChildren&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    import slotChildren from &apos;./slotChildren.vue&apos;
+    export default {
+        name: &quot;Slotdemo&quot;,
+        components: {
+            slotChildren
+        }
+    }  
+&lt;/script&gt;
+
+子组件slotChildren组件，
+&lt;template&gt;
+    &lt;div&gt;
+        &lt;header&gt;slotchildrenheader
+            &lt;slot name=&quot;header&quot;&gt;&lt;/slot&gt;
+            &lt;slot&gt;&lt;/slot&gt;//如果匹配不到内容显示在这
+        &lt;/header&gt;
+        &lt;main&gt;&lt;slot name=&quot;main&quot;&gt;&lt;/slot&gt;这是子组件的内容&lt;/main&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;&lt;/script&gt;
+</code></pre><p>页面渲染结果如下图：<br><img src="/2018/07/14/cjvx8yad7000a8gvbbstq9vbt/slot-04.png" alt="slot演示">  </p>
+<h4 id="2-3作用域插槽的使用"><a href="#2-3作用域插槽的使用" class="headerlink" title="2.3作用域插槽的使用"></a>2.3作用域插槽的使用</h4><p>作用域插槽是一种特殊类型的插槽，用作一个（能被传递数据的）可重用模板，来代替已经渲染好的元素。</p>
+<pre><code>在子组件中，只需将数据传递到插槽，就像你将prop传递给组件一样：
+&lt;template&gt;
+    &lt;div&gt;
+        &lt;header&gt;slotchildrenheader&lt;/header&gt;
+        &lt;main&gt;这是子组件的内容&lt;slot :text=&quot;msg&quot;&gt;&lt;/slot&gt;&lt;/main&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    export default {
+        name: &apos;&apos;,
+        data() {
+            return {
+                msg: &quot;slot分发内容&quot;,
+            }
+        },
+    }
+&lt;/script&gt;
+
+在父组件中，具有特殊特性 slot-scope 的 &lt;template&gt; 元素必须存在，表示它是作用域插槽的模板。slot-scope 的值将被用作一个临时变量名，此变量接收从子组件传递过来的 prop 对象。
+&lt;template&gt;
+    &lt;div class=&quot;Slotdemo&quot;&gt;
+        &lt;slotChildren&gt;
+            &lt;template slot-scope=&quot;props&quot;&gt;//作用域模板插槽必须存在
+                &lt;div&gt;新的slotchildrenheader&lt;/div&gt;
+                &lt;div&gt;新的内容&lt;div&gt;{{props.text}}&lt;/div&gt;&lt;/div&gt;
+            &lt;/template&gt;
+        &lt;/slotChildren&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+&lt;script&gt;
+    import slotChildren from &apos;./slotChildren.vue&apos;
+    export default {
+        name: &quot;Slotdemo&quot;,
+        components: {
+            slotChildren
+        }
+    }
+&lt;/script&gt;
+</code></pre><p>页面渲染结果如下图：<br><img src="/2018/07/14/cjvx8yad7000a8gvbbstq9vbt/slot-05.png" alt="slot演示">  </p>
+<h3 id="三、小结"><a href="#三、小结" class="headerlink" title="三、小结"></a>三、小结</h3><p>这篇文章主要介绍vue中的<slot>插槽的使用方法。<slot>只是一个空壳子，他的显示以及如何显示手父组件的控制，插槽显示的位置由子组件自身决定。<br>父组件传过来的模板显示<slot>组件的template。<br>使用slot可以帮助我们更容易，灵活的使用组件，同时也提高了组件的复用性。</slot></slot></slot></p>
+<script type="text/javascript" src="/js/jquery.js?v=2.0.1" async></script><div class="post-donate"><div id="donate_board" class="donate_bar center"><a id="btn_donate" href="javascript:;" title="打赏" class="btn_donate"></a><div class="donate_txt"> &uarr;<br>坚持原创技术分享，您的支持将鼓励我继续创作！<br></div></div><div id="donate_guide" class="donate_bar center hidden pay"><img src="/images/weChatMoney.png" title="微信打赏" alt="微信打赏"><img src="/images/alipayMoney.png" title="支付宝打赏" alt="支付宝打赏"></div><script type="text/javascript">document.getElementById('btn_donate').onclick = function(){
+    $('#donate_board').addClass('hidden');
+    $('#donate_guide').removeClass('hidden');
+}</script></div></div><div class="tags"><a href="/tags/slot/">slot</a><a href="/tags/vue/">vue</a></div><div class="post-share"><div class="bdsharebuttonbox"><span style="float:left;line-height: 28px;height: 28px;font-size:16px;font-weight:blod">分享到：</span><a href="#" data-cmd="more" class="bds_more"></a><a href="#" data-cmd="mshare" title="分享到一键分享" class="bds_mshare"></a><a href="#" data-cmd="fbook" title="分享到Facebook" class="bds_fbook"></a><a href="#" data-cmd="twi" title="分享到Twitter" class="bds_twi"></a><a href="#" data-cmd="linkedin" title="分享到linkedin" class="bds_linkedin"></a><a href="#" data-cmd="youdao" title="分享到有道云笔记" class="bds_youdao"></a><a href="#" data-cmd="evernotecn" title="分享到印象笔记" class="bds_evernotecn"></a><a href="#" data-cmd="weixin" title="分享到微信" class="bds_weixin"></a><a href="#" data-cmd="qzone" title="分享到QQ空间" class="bds_qzone"></a><a href="#" data-cmd="tsina" title="分享到新浪微博" class="bds_tsina"></a></div></div><div class="post-nav"><a href="/2018/07/21/cjvx8yacm00008gvb8a2hwxti/" class="pre">drafting</a><a href="/2018/07/04/cjvx8yad600098gvbfo67wfjo/" class="next">工作中遇到的问题总结</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zODk0OS8xNTQ3Nw=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、slot简介"><span class="toc-text">一、slot简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、slot插槽具体用法"><span class="toc-text">二、slot插槽具体用法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1单个插槽的使用"><span class="toc-text">2.1单个插槽的使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2具名插槽的使用"><span class="toc-text">2.2具名插槽的使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3作用域插槽的使用"><span class="toc-text">2.3作用域插槽的使用</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、小结"><span class="toc-text">三、小结</span></a></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/05/21/cjvx8yad500068gvbag12pitt/">javascript设计模式与开发实践四（单例模式）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/17/cjvx8yb38001m8gvbs1y72wjh/">javascript设计模式与开发实践三（闭包和高阶函数）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/16/cjvx8yay000158gvb8t5ink7k/">javascript设计模式与开发实践二（this、call 和 apply）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/14/cjvx8yb3s001o8gvb8djm9k57/">javascript设计模式与开发实践一（面向对象的JavaScript ）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/13/cjvx8yawx000r8gvb53bgicfo/">javascript数据结构与算法十二（算法复杂度）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/07/cjvx8yb2p001j8gvb9a31c8cp/">javascript数据结构与算法十一（算法模式）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/05/cjvx8yb1k001d8gvb8fvnrazm/">javascript数据结构与算法十（排序和搜索算法）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/08/cjvx8yb2n001h8gvb1to333ss/">javascript数据结构与算法九（图）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/28/cjvx8yb2m001g8gvbsvgv9mx8/">javascript数据结构与算法八（树）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/18/cjvx8yb1h001a8gvbx7lg6gsa/">javascript数据结构与算法七（字典和散列表）</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/js实现拖拽/" style="font-size: 15px;">js实现拖拽</a> <a href="/tags/前端历史/" style="font-size: 15px;">前端历史</a> <a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/slot/" style="font-size: 15px;">slot</a> <a href="/tags/vue/" style="font-size: 15px;">vue</a> <a href="/tags/vuex/" style="font-size: 15px;">vuex</a> <a href="/tags/es6/" style="font-size: 15px;">es6</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/github-pages/" style="font-size: 15px;">github pages</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-weibo"> 新浪微博</i></div><iframe width="100%" height="400" frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&amp;width=0&amp;height=550&amp;fansRow=2&amp;ptype=1&amp;speed=0&amp;skin=1&amp;isTitle=1&amp;noborder=1&amp;isWeibo=1&amp;isFans=1&amp;uid=6110018783&amp;verifier=e6a8e226&amp;dpc=1" class="share_self"></iframe></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://github.com/Abriams/Abriams.github.io" title="github地址" target="_blank">github地址</a><ul></ul><a href="https://weibo.com/u/6110018783/home?wvr=5" title="微博" target="_blank">微博</a><ul></ul><a href="https://juejin.im/timeline" title="掘金" target="_blank">掘金</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">Baidu Site Haritası</a> |  <a href="/atom.xml">订阅</a> |  <a href="/about/">关于</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次</p><p><span> Copyright &copy;<a href="/." rel="nofollow">Abriams.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?b1cc44eb56a7dbf6192c0702e5b38b08";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.1"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.1" async></script><script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","weixin","tsina","qzone","linkedin","fbook","twi","print","renren","sqq","evernotecn","bdysc","tqq","tqf","bdxc","kaixin001","tieba","douban","bdhome","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","h163","copy"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"]}};with(document)0[(getElementsByTagName('head')[0]||head).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script><script>(function(d, s) {
+  var j, e = d.getElementsByTagName('body')[0];
+  if (typeof LivereTower === 'function') { return; }
+  j = d.createElement(s);
+  j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  j.async = true;
+  e.appendChild(j);
+})(document, 'script');
+</script></body></html>
