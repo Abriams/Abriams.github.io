@@ -1,0 +1,633 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.8.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="Abriams blog"><meta name="keywords" content="前端， 移动互联网, vue"><title>javascript数据结构与算法二（数组的使用） | 淡笑忘、祈一世凡恋</title><link rel="stylesheet" type="text/css" href="/css/donate.css"><link rel="stylesheet" type="text/css" href="//fonts.neworld.org/css?family=Source+Code+Pro"><link rel="stylesheet" type="text/css" href="/css/style.css?v=2.0.1"><link rel="stylesheet" type="text/css" href="/css/highlight.css?v=2.0.1"><link rel="Shortcut Icon" href="/favicon.ico"><link rel="bookmark" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">javascript数据结构与算法二（数组的使用）</h1><a id="logo" href="/.">淡笑忘、祈一世凡恋</a><p class="description">进步的源泉来源于坚持不懈</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div><div id="search-form"><div id="result-mask" class="hide"></div><label><input id="search-key" type="text" autocomplete="off" placeholder="Arama"></label><div id="result-wrap" class="hide"><div id="search-result"></div></div><div class="hide"><template id="search-tpl"><div class="item"><a href="/{path}" title="{title}"><div class="title">{title}</div><div class="time">{date}</div><div class="tags">{tags}</div></a></div></template></div></div></div><div id="layout" class="layout-g"><div class="layout-l"><div class="content_container"><div class="post"><h1 class="post-title">javascript数据结构与算法二（数组的使用）</h1><div class="post-meta"><a href="/2018/09/10/cjw8nr1in0013movb9nya4wma/#comments" class="comment-count"></a><p><span class="date">Sep 10, 2018</span><span><i id="busuanzi_container_page_pv"><i id="busuanzi_value_page_pv"></i><i>点击</i></i></span></p></div><div class="post-content"><h3 id="一、创建和初始化数组"><a href="#一、创建和初始化数组" class="headerlink" title="一、创建和初始化数组"></a>一、创建和初始化数组</h3><h4 id="1-1-创建数组"><a href="#1-1-创建数组" class="headerlink" title="1.1 创建数组"></a>1.1 创建数组</h4><p>用JavaScript声明、创建和初始化数组有两种方式</p>
+<pre><code>//使用new创建数组
+
+var daysOfWeek = new Array(); //{1}
+var daysOfWeek = new Array(7); //{2}
+var daysOfWeek = new Array(&apos;Sunday&apos;, &apos;Monday&apos;, &apos;Tuesday&apos;, &apos;Wednesday&apos;,
+&apos;Thursday&apos;, &apos;Friday&apos;, &apos;Saturday&apos;); //{3}
+使用new关键字，就能简单地声明并初始化一个数组（行{1}）。用这种方式，还可以创建一
+个指定长度的数组（行{2}）。另外，也可以直接将数组元素作为参数传递给它的构造器（行{3}）。
+
+//使用[]创建数组
+
+var daysOfWeek = [];
+
+也可使用一些元素初始化数组，如下：
+
+var daysOfWeek = [&apos;Sunday&apos;, &apos;Monday&apos;, &apos;Tuesday&apos;, &apos;Wednesday&apos;,
+&apos;Thursday&apos;, &apos;Friday&apos;, &apos;Saturday&apos;]; 
+
+使用数组的length属性获取数组的长度
+
+console.log(daysOfWeek.length); //7
+</code></pre><h4 id="1-2-访问元素和迭代数组"><a href="#1-2-访问元素和迭代数组" class="headerlink" title="1.2 访问元素和迭代数组"></a>1.2 访问元素和迭代数组</h4><p>要访问数组里特定位置的元素，可以用中括号传递数值位置，得到想知道的值或者赋新的值。如下：</p>
+<pre><code>for (var i=0; i&lt;daysOfWeek.length; i++){
+    console.log(daysOfWeek[i]);
+} 
+</code></pre><p>我们来看另一个例子：求斐波那契数列的前20个数字。已知斐波那契数列中第一个数字是1，<br>第二个是2，从第三项开始，每一项都等于前两项之和：</p>
+<pre><code>var fibonacci = []; //{1}
+fibonacci[1] = 1; //{2}
+fibonacci[2] = 2; //{3}
+for(var i = 3; i &lt; 20; i++){
+    fibonacci[i] = fibonacci[i-1] + fibonacci[i-2]; ////{4}
+}
+for(var i = 1; i&lt;fibonacci.length; i++){ //{5}
+    console.log(fibonacci[i]); //{6}
+} 
+
+在行{1}处，我们声明并创建了一个数组。
+
+在行{2}和行{3}，把斐波那契数列中的前两个数字分别赋给了数组的第二和第三位（在JavaScript中，数组的第一位是0，这里我们略过，从第二位开始分别保存斐波那契数列中对应位置的元素）。
+
+然后，我们需要做的就是想办法得到斐波那契数列的第三到第二十位的数字（前两个值我们已经初始化过了）。我们可以用循环来处理，把数组中前两位上的元素相加，结果赋给当前位置上的元素（行{4}——从数组中的索引3到索引19）。
+
+最后，看看输出（行{6}），我们只需要循环遍历数组的各个元素（行{5}）。
+</code></pre><h4 id="1-3-添加元素"><a href="#1-3-添加元素" class="headerlink" title="1.3 添加元素"></a>1.3 添加元素</h4><h5 id="1-3-1-使用数组索引直接添加"><a href="#1-3-1-使用数组索引直接添加" class="headerlink" title="1.3.1 使用数组索引直接添加"></a>1.3.1 使用数组索引直接添加</h5><pre><code>var numbers = [0,1,2,3,4,5,6,7,8,9];
+
+如果想要给数组添加一个元素（比如10），只要把值赋给数组中最后一个空位上的元素即可。
+
+numbers[numbers.length] = 10; 
+</code></pre><h5 id="1-3-2-使用push方法"><a href="#1-3-2-使用push方法" class="headerlink" title="1.3.2 使用push方法"></a>1.3.2 使用push方法</h5><p>push方法，能把元素添加到数组的末尾</p>
+<pre><code>numbers.push(11);
+numbers.push(12, 13); 
+</code></pre><h5 id="1-3-3-插入元素到数组首位"><a href="#1-3-3-插入元素到数组首位" class="headerlink" title="1.3.3 插入元素到数组首位"></a>1.3.3 插入元素到数组首位</h5><p>现在，我们希望在数组中插入一个值，不像之前那样插入到最后，而是放到数组的首位。为了实现这个需求，首先我们要腾出数组里第一个元素的位置，把所有的元素向右移动一位。我们可以循环数组中的元素，从最后一位+1（长度）开始，将其对应的前一个元素的值赋给它，依次处理，最后把我们想要的值赋给第一个位置（-1）上。</p>
+<pre><code>for (var i=numbers.length; i&gt;=0; i--){
+    numbers[i] = numbers[i-1];
+}
+numbers[0] = -1; 
+</code></pre><p>下面这张图描述了我们刚才的操作过程：</p>
+<p><img src="/2018/09/10/cjw8nr1in0013movb9nya4wma/shift.png" alt="插入元素到数组首位">;</p>
+<pre><code>也可以使用unshift方法
+
+numbers.unshift(-2);
+numbers.unshift(-4, -3);
+</code></pre><h4 id="1-4-删除元素"><a href="#1-4-删除元素" class="headerlink" title="1.4 删除元素"></a>1.4 删除元素</h4><h5 id="1-4-1-删除数组里最靠后的元素"><a href="#1-4-1-删除数组里最靠后的元素" class="headerlink" title="1.4.1 删除数组里最靠后的元素"></a>1.4.1 删除数组里最靠后的元素</h5><pre><code>删除数组里最靠后的元素使用pop方法：
+
+numbers.pop();
+</code></pre><h5 id="1-4-2-从数组首位删除元素"><a href="#1-4-2-从数组首位删除元素" class="headerlink" title="1.4.2 从数组首位删除元素"></a>1.4.2 从数组首位删除元素</h5><p>如果要移除数组里的第一个元素，可以用下面的代码：</p>
+<pre><code>for (var i = 0; i &lt; numbers.length; i++){
+    numbers[i] = numbers[i+1];
+} 
+</code></pre><p>下面这张图呈现了这段代码的执行过程：</p>
+<p><img src="/2018/09/10/cjw8nr1in0013movb9nya4wma/shift.png" alt="从数组首位删除元素"></p>
+<pre><code>我们把数组里所有的元素都左移了一位。但数组的长度依然是17，这意味着数组中有额外的
+一个元素（值是undefined）。在最后一次循环里，i + 1引用了一个数组里还未初始化的位置。
+在Java、C/C+或C#等一些语言里，这样写可能就会抛出异常了，因此不得不在 numbers.length
+- 1处停止循环。
+可以看到，我们只是把数组第一位的值用第二位覆盖了，并没有删除元素（因为数组的长度
+和之前还是一样的，并且了多一个未定义元素）。
+</code></pre><p>使用unshift()方法</p>
+<pre><code>numbers.shift(); //通过shift和unshift方法，就能用数组模拟基本的队列数据结构，
+</code></pre><h5 id="1-4-3-在任意位置添加或删除元素"><a href="#1-4-3-在任意位置添加或删除元素" class="headerlink" title="1.4.3 在任意位置添加或删除元素"></a>1.4.3 在任意位置添加或删除元素</h5><p>使用splice方法，简单地通过指定位置/索引，就可以删除相应位置和数量的元素： //如下</p>
+<pre><code>numbers.splice(5,3); 
+
+//这行代码删除了从数组索引5开始的3个元素。这就意味着numbers[5]、numbers[6]和numbers[7]从数组中删除了。
+</code></pre><p>splice方法接收的第一个参数，表示想要删除或插入的元素的索引值。第二个参数是删除元素的个数（这个例子里，我们的目的不是删除元素，所以传入0）。第三个参数往后，就是要添加到数组里的值（元素2、3、4）。输出会发现值又变成了从3到12。</p>
+<pre><code>numbers.splice(5,3,2,3,4);//我们从索引5开始删除了3个元素，但也从索引5开始添加了元素2、3、4
+</code></pre><p>对于JavaScript数组和对象，我们还可以用delete操作符删除数组中的元素，例如delete numbers[0]。然而，数组位置0的值会变成undefined，也就是说，以上操作等同于numbers[0] = undefined。因此，我们应该始终使用splice、pop或shift（马上就会学到）方法来删除数组元素。</p>
+<h3 id="二、-二维和多维数组"><a href="#二、-二维和多维数组" class="headerlink" title="二、 二维和多维数组"></a>二、 二维和多维数组</h3><p>JavaScript只支持一维数组，并不支持矩阵(二维数组)。但是，我们可以用数组套数组，实现矩阵或任一多维数组。代码也可以写成这样：</p>
+<pre><code>var averageTemp = [];
+averageTemp[0] = [];
+averageTemp[0][0] = 72;
+averageTemp[0][1] = 75;
+averageTemp[0][2] = 79;
+averageTemp[0][3] = 79;
+averageTemp[0][4] = 81;
+averageTemp[0][5] = 81;
+//day 2
+averageTemp[1] = [];
+averageTemp[1][0] = 81;
+averageTemp[1][1] = 79;
+averageTemp[1][2] = 75;
+averageTemp[1][3] = 75;
+averageTemp[1][4] = 73;
+averageTemp[1][5] = 72; 
+</code></pre><p>上面的代码里，我们分别指定了每天和每小时的数据。数组中的内容如下图所示：</p>
+<p><img src="/2018/09/10/cjw8nr1in0013movb9nya4wma/images-01.png" alt="每天和每小时的数据"></p>
+<p>每行就是每天的数据，每列是当天不同时段的气温</p>
+<h4 id="2-1-迭代二维数组的元素"><a href="#2-1-迭代二维数组的元素" class="headerlink" title="2.1 迭代二维数组的元素"></a>2.1 迭代二维数组的元素</h4><p>如果想看矩阵的输出，我们可以创建一个通用函数，专门输出其中的值：</p>
+<pre><code>function printMatrix(myMatrix) {
+    for (var i=0; i&lt;myMatrix.length; i++){ 
+        for (var j=0; j&lt;myMatrix[i].length; j++){
+            console.log(myMatrix[i][j]);
+        }
+    }
+} 
+
+需要遍历所有的行和列。因此，我们需要使用一个嵌套的for循环来处理，其中变量i为行，变量j为列。
+
+使用以下代码查看矩阵averageTemp的输出：
+
+printMatrix(averageTemp); 
+</code></pre><h4 id="2-2-多维数组"><a href="#2-2-多维数组" class="headerlink" title="2.2 多维数组"></a>2.2 多维数组</h4><p>我们也可以用这种方式来处理多维数组。假如我们要创建一个3×3×3的矩阵，每一格里包含矩阵的i（行）、j（列）及z（深度）之和：</p>
+<pre><code>var matrix3x3x3 = [];
+for (var i=0; i&lt;3; i++){
+    matrix3x3x3[i] = [];
+    for (var j=0; j&lt;3; j++){
+        matrix3x3x3[i][j] = [];
+        for (var z=0; z&lt;3; z++){
+            matrix3x3x3[i][j][z] = i+j+z;
+        }
+    }
+}
+</code></pre><p>数据结构中有几个维度都没关系，我们都可以用循环遍历每个维度来访问所有格子。3×3×3的矩阵也可用立体图表示如下：</p>
+<p><img src="/2018/09/10/cjw8nr1in0013movb9nya4wma/images-02.png" alt="3×3×3的矩阵"></p>
+<p>可以用以下代码输出这个矩阵的内容：</p>
+<pre><code>for (var i=0; i&lt;matrix3x3x3.length; i++){
+    for (var j=0; j&lt;matrix3x3x3[i].length; j++){
+        for (var z=0; z&lt;matrix3x3x3[i][j].length; z++){
+            console.log(matrix3x3x3[i][j][z]);
+        }
+    }
+} 
+</code></pre><p>如果是一个3×3×3×3的矩阵，代码中就会用四层嵌套的for语句，以此类推。</p>
+<h4 id="2-3-JavaScript-的数组方法参考"><a href="#2-3-JavaScript-的数组方法参考" class="headerlink" title="2.3 JavaScript 的数组方法参考"></a>2.3 JavaScript 的数组方法参考</h4><table>
+<thead>
+<tr>
+<th>方法名</th>
+<th style="text-align:center">语法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>concat</td>
+<td style="text-align:center">连接数组（一个或多个），返回连接后的结果</td>
+</tr>
+<tr>
+<td>every</td>
+<td style="text-align:center">对数组中的每一项运行给定函数，如果该函数对每一项都返回true，则返回true</td>
+</tr>
+<tr>
+<td>filter</td>
+<td style="text-align:center">对数组中的每一项运行给定函数，返回该函数会返回true的项组成的数组</td>
+</tr>
+<tr>
+<td>forEach</td>
+<td style="text-align:center">遍历数组</td>
+</tr>
+<tr>
+<td>join</td>
+<td style="text-align:center">将所有的数组元素连接成一个字符串</td>
+</tr>
+<tr>
+<td>indexOf</td>
+<td style="text-align:center">从数组开始查找数组元素在数组中的的位置，并返回，没有找到则返回-1 </td>
+</tr>
+<tr>
+<td>lastIndexOf</td>
+<td style="text-align:center">从数组结尾查找数组元素在数组中的的位置，并返回，没有找到则返回-1</td>
+</tr>
+<tr>
+<td>map</td>
+<td style="text-align:center">遍历数组元素，并返回</td>
+</tr>
+<tr>
+<td>reverse</td>
+<td style="text-align:center">颠倒数组中元素的顺序</td>
+</tr>
+<tr>
+<td>slice</td>
+<td style="text-align:center">截取数组中的元素</td>
+</tr>
+<tr>
+<td>some</td>
+<td style="text-align:center">对数组中的每一项运行给定函数，如果任一项返回true，则返回true</td>
+</tr>
+<tr>
+<td>sort</td>
+<td style="text-align:center">按照字母顺序对数组排序，支持传入指定排序方法的函数作为参数</td>
+</tr>
+<tr>
+<td>toString</td>
+<td style="text-align:center">将数组作为字符串返回</td>
+</tr>
+<tr>
+<td>valueOf</td>
+<td style="text-align:center">和toString类似，将数组作为字符串返回</td>
+</tr>
+</tbody>
+</table>
+<h5 id="2-3-1-数组合并"><a href="#2-3-1-数组合并" class="headerlink" title="2.3.1 数组合并"></a>2.3.1 数组合并</h5><p>concat方法可以向一个数组传递数组、对象或是元素。数组会按照该方法传入的参数顺序连接指定数组。如下：</p>
+<pre><code>var zero = 0;
+var positiveNumbers = [1,2,3];
+var negativeNumbers = [-3,-2,-1];
+var numbers = negativeNumbers.concat(zero, positiveNumbers);  //[3,2,1,0,1,2,3]
+</code></pre><h5 id="2-3-1-迭代器函数"><a href="#2-3-1-迭代器函数" class="headerlink" title="2.3.1 迭代器函数"></a>2.3.1 迭代器函数</h5><p>迭代数组中的元素可以使用for循环，同样JavaScript内置了许多数组可用的迭代方法</p>
+<p>解决如下案例：</p>
+<p>假如有一个数组，它值是从1到15，如果数组里的元素可以被2整除（偶数），函数就返回true，否则返回false：</p>
+<pre><code>var isEven = function (x) {
+    // 如果x是2的倍数，就返回true
+    console.log(x);
+    return (x % 2 == 0) ? true : false;
+};
+var numbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]; 
+</code></pre><ul>
+<li><p>用every方法迭代</p>
+<p>  numbers.every(isEven);  //false</p>
+<p>  //数组numbers的第一个元素是1，它不是2的倍数（1是奇数），因此isEven 函数返回false，然后every执行结束。</p>
+</li>
+<li><p>用some方法迭代</p>
+</li>
+</ul>
+<p>some方法会迭代数组的每个元素，直到函数返回true：</p>
+<pre><code>numbers.some(isEven); 
+
+//numbers数组中第一个偶数是2（第二个元素）。第一个被迭代的元素是1，
+
+isEven会返回false。第二个被迭代的元素是2，isEven返回true——迭代结束。
+</code></pre><ul>
+<li><p>用forEach方法迭代</p>
+<p> numbers.forEach(function(x){</p>
+<pre><code>console.log((x % 2 == 0));
+</code></pre><p> }); </p>
+</li>
+<li><p>使用map和filter方法</p>
+<p>  var myMap = numbers.map(isEven); </p>
+<p>  //[false, true, false, true, false, true, false, true,false, true, false, true, false, true, false]。</p>
+<p>  filter方法返回新数组由使函数返回true的元素组成：</p>
+<p>  var evenNumbers = numbers.filter(isEven); </p>
+<p>  //[2, 4, 6, 8, 10, 12, 14]</p>
+</li>
+<li><p>使用reduce方法</p>
+</li>
+</ul>
+<p>reduce方法接收一个函数作为参数，这个函数有四个参数：previousValue、currentValue、index和array。这个函数会返回一个将被叠加到累加器的值，reduce方法停止执行后会返回这个累加器</p>
+<pre><code>numbers.reduce(function(previous, current, index){
+    return previous + current; //120
+}); 
+</code></pre><h4 id="2-4-ECMAScript-6-和数组的新功能"><a href="#2-4-ECMAScript-6-和数组的新功能" class="headerlink" title="2.4 ECMAScript 6 和数组的新功能"></a>2.4 ECMAScript 6 和数组的新功能</h4><p>下标展示了一些ES6和ES7新增的数组方法</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@@iterator</td>
+<td style="text-align:center">返回一个包含数组键值对的迭代器对象，可以通过同步调用得到数组元素的键值对</td>
+</tr>
+<tr>
+<td>copyWithin</td>
+<td style="text-align:center">复制数组中一系列元素到同一数组指定的起始位置</td>
+</tr>
+<tr>
+<td>entries</td>
+<td style="text-align:center">返回包含数组所有键值对的@@iterator</td>
+</tr>
+<tr>
+<td>includes</td>
+<td style="text-align:center">如果数组中存在某个元素则返回true，否则返回false。ES7新增</td>
+</tr>
+<tr>
+<td>find</td>
+<td style="text-align:center">根据回调函数给定的条件从数组中查找元素，如果找到则返回该元素</td>
+</tr>
+<tr>
+<td>findIndex</td>
+<td style="text-align:center">根据回调函数给定的条件从数组中查找元素，如果找到则返回该元素在数组中的索引-1 </td>
+</tr>
+<tr>
+<td>fill</td>
+<td style="text-align:center">用静态值填充数组-1</td>
+</tr>
+<tr>
+<td>from</td>
+<td style="text-align:center">根据已有数组创建一个新数组</td>
+</tr>
+<tr>
+<td>keys</td>
+<td style="text-align:center">返回包含数组所有索引的@@iterator</td>
+</tr>
+<tr>
+<td>of</td>
+<td style="text-align:center">根据传入的参数创建一个新数组</td>
+</tr>
+<tr>
+<td>values</td>
+<td style="text-align:center">返回包含数组中所有值的@@iterator</td>
+</tr>
+<tr>
+<td>sort</td>
+<td style="text-align:center">按照字母顺序对数组排序，支持传入指定排序方法的函数作为参数</td>
+</tr>
+</tbody>
+</table>
+<p>除了这些新的方法，还有一种用for…of循环来迭代数组的新做法，以及可以从数组实例得到的迭代器对象</p>
+<h5 id="2-4-1-使用forEach和箭头函数迭代"><a href="#2-4-1-使用forEach和箭头函数迭代" class="headerlink" title="2.4.1 使用forEach和箭头函数迭代"></a>2.4.1 使用forEach和箭头函数迭代</h5><p>箭头函数可以简化使用forEach迭代数组元素的做法，如下</p>
+<pre><code>numbers.forEach(function (x) {
+
+    console.log(x % 2 == 0);
+
+});
+
+//这段代码可以简化如下：
+
+numbers.forEach(x =&gt; {
+
+    console.log((x % 2 == 0));
+
+}); 
+</code></pre><h5 id="2-4-2-使用for…of循环迭代"><a href="#2-4-2-使用for…of循环迭代" class="headerlink" title="2.4.2 使用for…of循环迭代"></a>2.4.2 使用for…of循环迭代</h5><pre><code>for (let n of numbers) {
+
+    console.log((n % 2 == 0) ? &apos;even&apos; : &apos;odd&apos;);
+
+} 
+</code></pre><h5 id="2-4-3-ES6新的迭代器（-iterator）"><a href="#2-4-3-ES6新的迭代器（-iterator）" class="headerlink" title="2.4.3 ES6新的迭代器（@@iterator）"></a>2.4.3 ES6新的迭代器（@@iterator）</h5><p>ES6还为Array类增加了一个@@iterator属性，需要通过Symbol.iterator来访问。代码如下:</p>
+<pre><code>let iterator = numbers[Symbol.iterator]();
+
+console.log(iterator.next().value); // 1
+
+console.log(iterator.next().value); // 2
+
+console.log(iterator.next().value); // 3
+
+console.log(iterator.next().value); // 4
+
+console.log(iterator.next().value); // 5 
+</code></pre><p>然后，不断调用迭代器的next方法，就能依次得到数组中的值,数组中所有值都迭代完之后，iterator.next().value会返回undefined。 </p>
+<h5 id="2-4-4-数组的entries、keys和values方法"><a href="#2-4-4-数组的entries、keys和values方法" class="headerlink" title="2.4.4 数组的entries、keys和values方法"></a>2.4.4 数组的entries、keys和values方法</h5><ol>
+<li>entries: 返回包含键值对的@@iterator，如下案例：</li>
+</ol>
+<pre><code>let numbers = [1,2,3]
+
+let aEntries = numbers.entries(); // 得到键值对的迭代器,key是数组中的位置，value是保存在数组索引的值。
+
+console.log(aEntries.next().value); // [0, 1] - 位置0的值为1
+
+console.log(aEntries.next().value); // [1, 2] - 位置1的值为2
+
+console.log(aEntries.next().value); // [2, 3] - 位置2的值为3 
+</code></pre><p>entries方法会返回numbers数组位置以及对应的值，如果没有可迭代的值则返回undefined。</p>
+<ol start="2">
+<li>entries：方法返回包含数组索引的@@iterator，如下案例：</li>
+</ol>
+<pre><code>let numbers = [1,2,3]
+
+let aKeys = numbers.keys(); // 得到数组索引的迭代器
+
+console.log(aKeys.next()); // {value: 0, done: false }
+
+console.log(aKeys.next()); // {value: 1, done: false }
+
+console.log(aKeys.next()); // {value: 2, done: false } 
+
+console.log(aKeys.next()); // {value: undefined, done: true } 
+</code></pre><p>keys方法会返回numbers数组的索引。一旦没有可迭代的值，aKeys.next()就会返回一个value属性为undefined，done属性为true的对象。如果done属性的值为false，就意味着还有可迭代的值。</p>
+<ol start="3">
+<li>values：方法返回的@@iterator则包含数组的值</li>
+</ol>
+<pre><code>let numbers = [1,2,3]
+
+let aValues = numbers.values();
+
+console.log(aValues.next()); // {value: 1, done: false }
+
+console.log(aValues.next()); // {value: 2, done: false }
+
+console.log(aValues.next()); // {value: 3, done: false } 
+
+console.log(aValues.next()); // {value: undefined, done: true } 
+</code></pre><h5 id="2-4-5-from方法"><a href="#2-4-5-from方法" class="headerlink" title="2.4.5 from方法"></a>2.4.5 from方法</h5><p>Array.from方法根据已有的数组创建一个新数组，参数为过滤Array中元素的函数</p>
+<pre><code>let evens = Array.from(numbers, x =&gt; (x % 2 == 0)); 
+</code></pre><h5 id="2-4-6-用Array-of方法"><a href="#2-4-6-用Array-of方法" class="headerlink" title="2.4.6 用Array.of方法"></a>2.4.6 用Array.of方法</h5><p>Array.of方法根据传入的参数创建一个新数组</p>
+<pre><code>let numbers4 = Array.of(1, 2, 3, 4, 5, 6); //[1,2,3,4,5,6]
+</code></pre><p>也可以用这个方法复制已有的数组</p>
+<pre><code>let numbersCopy = Array.of(...numbers4);  //[1,2,3,4,5,6]
+</code></pre><h5 id="2-4-7-使用fill方法"><a href="#2-4-7-使用fill方法" class="headerlink" title="2.4.7 使用fill方法"></a>2.4.7 使用fill方法</h5><p>fill方法用静态值填充数组,参数为要添加的位置范围</p>
+<pre><code>let numbersCopy = Array.of(1, 2, 3, 4, 5, 6); 
+
+numbersCopy.fill(0); //（[0, 0, 0, 0, 0, 0]
+
+numbersCopy.fill(1, 3, 5); //[0, 0, 0, 1, 1, 0]
+</code></pre><p>创建数组并初始化值的时候，fill方法非常方便，如下：</p>
+<pre><code>let ones = Array(6).fill(1); //[1, 1, 1, 1, 1, 1]
+</code></pre><h5 id="2-4-8-copyWithin方法"><a href="#2-4-8-copyWithin方法" class="headerlink" title="2.4.8 copyWithin方法"></a>2.4.8 copyWithin方法</h5><p>copyWithin方法复制数组中的一系列元素到同一数组指定的起始位置</p>
+<pre><code>let copyArray = [1, 2, 3, 4, 5, 6]; 
+
+copyArray.copyWithin(0, 3); // [4, 5, 6, 4, 5, 6]   
+
+copyArray.copyWithin(1, 3, 5); //[4,4,5,4,5,6]
+</code></pre><h5 id="2-4-9-排序元素"><a href="#2-4-9-排序元素" class="headerlink" title="2.4.9 排序元素"></a>2.4.9 排序元素</h5><ul>
+<li>反转数组reverse：</li>
+</ul>
+<pre><code>let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14. 15];
+
+numbers.reverse(); 
+
+//[15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+</code></pre><ul>
+<li>对数组进行排序sort：</li>
+</ul>
+<pre><code>numbers.sort(); //[1, 10, 11, 12, 13, 14, 15, 2, 3, 4, 5, 6, 7, 8, 9]
+
+//sort方法在对数组做排序时，把元素默认成字符串进行相互比较。
+
+//所以在使用的时候传入自己写的比较函数
+
+numbers.sort(function(a, b){
+
+    return a-b;
+
+}); 
+
+//[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+</code></pre><ul>
+<li>自定义排序</li>
+</ul>
+<p>我们可以对任何对象类型的数组排序，也可以创建compareFunction来比较元素。例如，对象Person有名字和年龄属性，我们希望根据年龄排序，就可以这么写：</p>
+<pre><code>var friends = [
+
+    {name: &apos;John&apos;, age: 30},
+
+    {name: &apos;Ana&apos;, age: 20},
+
+    {name: &apos;Chris&apos;, age: 25}
+
+];
+
+function comparePerson(a, b){
+
+    if (a.age &lt; b.age){
+
+        return -1
+    }
+
+    if (a.age &gt; b.age){
+
+        return 1
+    }
+
+    return 0;
+}
+
+console.log(friends.sort(comparePerson)); 
+
+//在这个例子里，最后会输出Ana(20), Chris(25), John(30)。
+</code></pre><ul>
+<li>字符串排序</li>
+</ul>
+<p>JavaScript在做字符比较的时候，是根据字符对应的ASCII值来比较的。 如下案例：</p>
+<pre><code>var names =[&apos;Ana&apos;, &apos;ana&apos;, &apos;john&apos;, &apos;John&apos;];
+
+console.log(names.sort());  
+
+//[&quot;Ana&quot;, &quot;John&quot;, &quot;ana&quot;, &quot;john&quot;] 
+
+//因为A、J、a、j对应的ASCII值分别是65、75、97、106。
+</code></pre><p>现在，如果给sort传入一个忽略大小写的比较函数，将会输出[“Ana”, “ana”, “John”,”john”]：</p>
+<pre><code>names.sort(function(a, b){
+
+    if (a.toLowerCase() &lt; b.toLowerCase()){
+
+        return -1
+    }
+
+    if (a.toLowerCase() &gt; b.toLowerCase()){
+
+        return 1
+    }
+
+    return 0;
+}); 
+</code></pre><p>假如对带有重音符号的字符做排序的话，我们可以用localeCompare来实现：</p>
+<pre><code>var names2 = [&apos;Maève&apos;, &apos;Maeve&apos;];
+
+console.log(names2.sort(function(a, b){
+
+    return a.localeCompare(b);
+
+})); 
+
+//[&quot;Maeve&quot;, &quot;Maève&quot;]
+</code></pre><ul>
+<li>搜索（indexOf/lastIndexOf）</li>
+</ul>
+<p>搜索有两个方法：indexOf方法返回与参数匹配的第一个元素的索引，lastIndexOf返回与参数匹配的最后一个元素的索引,如果没有匹配的元素则返回-1。</p>
+<pre><code>console.log(numbers.indexOf(10)); //9
+
+console.log(numbers.indexOf(100)); //-1
+</code></pre><ul>
+<li>搜索（ECMAScript 6——find和findIndex方法）</li>
+</ul>
+<p>find和findIndex方法接收一个回调函数，搜索一个满足回调函数条件的值。</p>
+<pre><code>let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+
+function multipleOf13(element, index, array) {
+
+    return (element % 13 == 0) ? true : false;
+
+}
+
+console.log(numbers.find(multipleOf13)); //13
+
+console.log(numbers.findIndex(multipleOf13)); //12
+
+//find和findIndex的不同之处在于，find方法返回第一个满足条件的值。
+
+//findIndex方法则返回这个值在数组里的索引。
+
+//如果没有满足条件的值，find会返回undefined，而findIndex返回-1。
+</code></pre><ul>
+<li>搜索（ECMAScript 7——使用includes方法） </li>
+</ul>
+<p>如果数组里存在某个元素，includes方法会返回true，否则返回false。</p>
+<pre><code>console.log(numbers.includes(15)); //true
+
+console.log(numbers.includes(20));  //false
+</code></pre><p>如果给includes方法传入一个起始索引，搜索会从索引指定的位置开始：</p>
+<pre><code>let numbers2 = [7, 6, 5, 4, 3, 2, 1];
+
+console.log(numbers2.includes(4, 5)); //false
+</code></pre><h5 id="2-4-10-输出数组为字符串"><a href="#2-4-10-输出数组为字符串" class="headerlink" title="2.4.10 输出数组为字符串"></a>2.4.10 输出数组为字符串</h5><ul>
+<li>toString</li>
+</ul>
+<p>把数组里所有元素输出为一个字符串</p>
+<pre><code>let numbers = [1, 2, 3, 4]
+
+console.log(numbers.toString()); //1,2,3,4
+</code></pre><p>如果想用一个不同的分隔符（比如-）把元素隔开，可以用join方法：</p>
+<pre><code>var numbersString = numbers.join(&apos;-&apos;);
+
+console.log(numbersString); //1-2-3-4
+</code></pre><h4 id="三、-类型数组"><a href="#三、-类型数组" class="headerlink" title="三、 类型数组"></a>三、 类型数组</h4><p>JavaScript数组不是强类型的，因此它可以存储任意类型的数据。而类型数组则用于存储单一类型的数据。它的语法是let myArray = new TypedArray<br>(length)，其中TypedArray需替换为下表所列之一。</p>
+<table>
+<thead>
+<tr>
+<th>类型数组</th>
+<th style="text-align:center">数据类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Int8Array</td>
+<td style="text-align:center">8位二进制补码整数</td>
+</tr>
+<tr>
+<td>Uint8Array</td>
+<td style="text-align:center">8位无符号整数</td>
+</tr>
+<tr>
+<td>Uint8ClampedArray</td>
+<td style="text-align:center">8位无符号整数</td>
+</tr>
+<tr>
+<td>Int16Array</td>
+<td style="text-align:center">16位二进制补码整数</td>
+</tr>
+<tr>
+<td>Uint16Array</td>
+<td style="text-align:center">16位无符号整数</td>
+</tr>
+<tr>
+<td>Int32Array</td>
+<td style="text-align:center">32位二进制补码整数</td>
+</tr>
+<tr>
+<td>Uint32Array</td>
+<td style="text-align:center">32位无符号整数</td>
+</tr>
+<tr>
+<td>Float32Array</td>
+<td style="text-align:center">32位IEEE浮点数</td>
+</tr>
+<tr>
+<td>Float64Array</td>
+<td style="text-align:center">64位IEEE浮点数</td>
+</tr>
+</tbody>
+</table>
+<p>代码示例如下：</p>
+<pre><code>let length = 5;
+
+let int16 = new Int16Array(length);
+
+for (let i=0; i&lt;length; i++){
+
+    int16[i] = i+1;
+
+}
+
+console.log(int16); //[1, 2, 3, 4, 5]
+</code></pre><p>使用WebGL API、进行位操作、处理文件和图像时，类型数组都可以大展拳脚。它用起来和普通数组也毫无二致，本章所学的数组方法和功能都可以用于类型数组。</p>
+<script type="text/javascript" src="/js/jquery.js?v=2.0.1" async></script><div class="post-donate"><div id="donate_board" class="donate_bar center"><a id="btn_donate" href="javascript:;" title="打赏" class="btn_donate"></a><div class="donate_txt"> &uarr;<br>坚持原创技术分享，您的支持将鼓励我继续创作！<br></div></div><div id="donate_guide" class="donate_bar center hidden pay"><img src="/images/weChatMoney.png" title="微信打赏" alt="微信打赏"><img src="/images/alipayMoney.png" title="支付宝打赏" alt="支付宝打赏"></div><script type="text/javascript">document.getElementById('btn_donate').onclick = function(){
+    $('#donate_board').addClass('hidden');
+    $('#donate_guide').removeClass('hidden');
+}</script></div></div><div class="tags"><a href="/tags/javascript/">javascript</a></div><div class="post-share"><div class="bdsharebuttonbox"><span style="float:left;line-height: 28px;height: 28px;font-size:16px;font-weight:blod">分享到：</span><a href="#" data-cmd="more" class="bds_more"></a><a href="#" data-cmd="mshare" title="分享到一键分享" class="bds_mshare"></a><a href="#" data-cmd="fbook" title="分享到Facebook" class="bds_fbook"></a><a href="#" data-cmd="twi" title="分享到Twitter" class="bds_twi"></a><a href="#" data-cmd="linkedin" title="分享到linkedin" class="bds_linkedin"></a><a href="#" data-cmd="youdao" title="分享到有道云笔记" class="bds_youdao"></a><a href="#" data-cmd="evernotecn" title="分享到印象笔记" class="bds_evernotecn"></a><a href="#" data-cmd="weixin" title="分享到微信" class="bds_weixin"></a><a href="#" data-cmd="qzone" title="分享到QQ空间" class="bds_qzone"></a><a href="#" data-cmd="tsina" title="分享到新浪微博" class="bds_tsina"></a></div></div><div class="post-nav"><a href="/2018/09/28/cjw8nr1fo000qmovbmlsq8qhd/" class="pre">javascript数据结构与算法三（栈）</a><a href="/2018/08/16/cjw8nr0w10006movbj7basoz3/" class="next">javascript数据结构与算法一（javascript基础）</a></div><div id="comments"><div id="lv-container" data-id="city" data-uid="MTAyMC8zODk0OS8xNTQ3Nw=="></div></div></div></div></div><div class="layout-r"><div id="sidebar"><div class="search-pla"></div><div id="toc" class="widget"><div class="widget-title"><i class="fa fa-fei">文章目录</i></div><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一、创建和初始化数组"><span class="toc-text">一、创建和初始化数组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-创建数组"><span class="toc-text">1.1 创建数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-访问元素和迭代数组"><span class="toc-text">1.2 访问元素和迭代数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-添加元素"><span class="toc-text">1.3 添加元素</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-1-使用数组索引直接添加"><span class="toc-text">1.3.1 使用数组索引直接添加</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-2-使用push方法"><span class="toc-text">1.3.2 使用push方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-3-3-插入元素到数组首位"><span class="toc-text">1.3.3 插入元素到数组首位</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-删除元素"><span class="toc-text">1.4 删除元素</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-4-1-删除数组里最靠后的元素"><span class="toc-text">1.4.1 删除数组里最靠后的元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-4-2-从数组首位删除元素"><span class="toc-text">1.4.2 从数组首位删除元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#1-4-3-在任意位置添加或删除元素"><span class="toc-text">1.4.3 在任意位置添加或删除元素</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、-二维和多维数组"><span class="toc-text">二、 二维和多维数组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-迭代二维数组的元素"><span class="toc-text">2.1 迭代二维数组的元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-多维数组"><span class="toc-text">2.2 多维数组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-JavaScript-的数组方法参考"><span class="toc-text">2.3 JavaScript 的数组方法参考</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-数组合并"><span class="toc-text">2.3.1 数组合并</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-迭代器函数"><span class="toc-text">2.3.1 迭代器函数</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-ECMAScript-6-和数组的新功能"><span class="toc-text">2.4 ECMAScript 6 和数组的新功能</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4-1-使用forEach和箭头函数迭代"><span class="toc-text">2.4.1 使用forEach和箭头函数迭代</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4-2-使用for…of循环迭代"><span class="toc-text">2.4.2 使用for…of循环迭代</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4-3-ES6新的迭代器（-iterator）"><span class="toc-text">2.4.3 ES6新的迭代器（@@iterator）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4-4-数组的entries、keys和values方法"><span class="toc-text">2.4.4 数组的entries、keys和values方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4-5-from方法"><span class="toc-text">2.4.5 from方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4-6-用Array-of方法"><span class="toc-text">2.4.6 用Array.of方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4-7-使用fill方法"><span class="toc-text">2.4.7 使用fill方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4-8-copyWithin方法"><span class="toc-text">2.4.8 copyWithin方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4-9-排序元素"><span class="toc-text">2.4.9 排序元素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-4-10-输出数组为字符串"><span class="toc-text">2.4.10 输出数组为字符串</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#三、-类型数组"><span class="toc-text">三、 类型数组</span></a></li></ol></li></ol></div><div class="widget"><div class="widget-title"><i class="fa fa-xie"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/05/28/cjw8nr1la001imovbzyu4czjw/">javascript设计模式与开发实践八（发布—订阅模式）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/24/cjw8nr1fm000nmovbvnhqcdk4/">javascript设计模式与开发实践七（迭代器模式）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/23/cjw8nr1ld001mmovbsxe2cp1x/">javascript设计模式与开发实践六（代理模式）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/22/cjw8nr1lc001kmovb22rjdfa5/">javascript设计模式与开发实践五（策略模式 ）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/21/cjw8nr1lf001omovblwewh3l6/">javascript设计模式与开发实践四（单例模式）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/07/cjw8nr1lt001rmovbmpkennza/">javascript设计模式与开发实践三（闭包和高阶函数）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/29/cjw8nr1ip0014movb5jwu5b9q/">javascript设计模式与开发实践二（this、call 和 apply）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/18/cjw8nr1m9001tmovbxu3i7q5g/">javascript设计模式与开发实践一（面向对象的JavaScript ）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/12/cjw8nr1fn000omovb3fue9ro5/">javascript数据结构与算法十二（算法复杂度）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/cjw8nr1ma001umovbemam2zw2/">javascript数据结构与算法十一（算法模式）</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-biao"> 标签</i></div><div class="tagcloud"><a href="/tags/前端历史/" style="font-size: 15px;">前端历史</a> <a href="/tags/js实现拖拽/" style="font-size: 15px;">js实现拖拽</a> <a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/slot/" style="font-size: 15px;">slot</a> <a href="/tags/vue/" style="font-size: 15px;">vue</a> <a href="/tags/vuex/" style="font-size: 15px;">vuex</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/github-pages/" style="font-size: 15px;">github pages</a> <a href="/tags/es6/" style="font-size: 15px;">es6</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-archive"> 归档</i></div><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">四月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-weibo"> 新浪微博</i></div><iframe width="100%" height="400" frameborder="0" scrolling="no" src="https://widget.weibo.com/weiboshow/index.php?language=&amp;width=0&amp;height=550&amp;fansRow=2&amp;ptype=1&amp;speed=0&amp;skin=1&amp;isTitle=1&amp;noborder=1&amp;isWeibo=1&amp;isFans=1&amp;uid=6110018783&amp;verifier=e6a8e226&amp;dpc=1" class="share_self"></iframe></div><div class="widget"><div class="widget-title"><i class="fa fa-you"> 友情链接</i></div><ul></ul><a href="https://github.com/Abriams/Abriams.github.io" title="github地址" target="_blank">github地址</a><ul></ul><a href="https://weibo.com/u/6110018783/home?wvr=5" title="微博" target="_blank">微博</a><ul></ul><a href="https://juejin.im/timeline" title="掘金" target="_blank">掘金</a></div></div></div></div><a id="totop" href="#top"></a><div id="footer"><div class="footer-info"><p><a href="/baidusitemap.xml">Baidu Site Haritası</a> |  <a href="/atom.xml">订阅</a> |  <a href="/about/">关于</a></p><p>本站总访问量：<i id="busuanzi_container_site_pv"><i id="busuanzi_value_site_pv"></i></i>次</p><p><span> Copyright &copy;<a href="/." rel="nofollow">Abriams.</a></span><span> Theme by<a rel="nofollow" target="_blank" href="https://github.com/chaooo/hexo-theme-BlueLake"> BlueLake.</a></span><span> Count by<a href="http://busuanzi.ibruce.info/"> busuanzi.</a></span><span> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a></span></p></div></div></div><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?b1cc44eb56a7dbf6192c0702e5b38b08";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+  })();
+</script><script type="text/javascript" src="/js/search.json.js?v=2.0.1"></script><script type="text/javascript" src="/js/toctotop.js?v=2.0.1" async></script><script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["mshare","weixin","tsina","qzone","linkedin","fbook","twi","print","renren","sqq","evernotecn","bdysc","tqq","tqf","bdxc","kaixin001","tieba","douban","bdhome","thx","ibaidu","meilishuo","mogujie","diandian","huaban","duitang","hx","fx","youdao","sdo","qingbiji","people","xinhua","mail","isohu","yaolan","wealink","ty","iguba","h163","copy"],"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{},"image":{"viewList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["tsina","qzone","weixin","fbook","twi","linkedin","youdao","evernotecn","mshare"]}};with(document)0[(getElementsByTagName('head')[0]||head).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script><script>(function(d, s) {
+  var j, e = d.getElementsByTagName('body')[0];
+  if (typeof LivereTower === 'function') { return; }
+  j = d.createElement(s);
+  j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+  j.async = true;
+  e.appendChild(j);
+})(document, 'script');
+</script></body></html>
